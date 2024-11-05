@@ -44,29 +44,39 @@ function products_import_woocommerce() {
         $sql = "SELECT * FROM $products_table WHERE status = 'pending' LIMIT 1";
 
         // Retrieve pending products from the database
-        $products = $wpdb->get_results( $wpdb->prepare( $sql ) );
+        $products = $wpdb->get_results( $sql );
 
         if ( !empty( $products ) && is_array( $products ) ) {
             foreach ( $products as $product ) {
 
                 // Retrieve product data
-                $serial_id   = $product->id;
-                $sku         = '';
-                $title       = '';
-                $description = '';
-                $quantity    = 0;
+                $serial_id = $product->id;
+                $sku       = $product->product_number;
+
+                $product_info = $product->product_data;
+                $product_info = json_decode( $product_info, true );
+
+                $title        = $product_info['name'];
+                $product_type = $product_info['type'];
+                $min          = $product_info['min'];
+                $max          = $product_info['max'];
+                $dripfeed     = $product_info['dripfeed'];
+                $refill       = $product_info['refill'];
+                $cancel       = $product_info['cancel'];
+                $description  = '';
+                $quantity     = 0;
 
                 // Retrieve product images
                 $images = [];
 
                 // Retrieve product category
-                $category = '';
+                $category = $product_info['category'];
 
                 // Retrieve product tags
                 $tags = '';
 
                 // Extract prices
-                $regular_price = 0;
+                $regular_price = $product_info['rate'];
                 $sale_price    = 0;
 
                 // Set up the API client with WooCommerce store URL and credentials
@@ -105,22 +115,26 @@ function products_import_woocommerce() {
 
                     // Update the simple product if it already exists
                     $product_data = [
-                        'name'        => $title,
-                        'sku'         => $sku,
-                        'type'        => 'simple',
-                        'description' => $description,
-                        'attributes'  => [],
+                        'name'              => $title,
+                        'sku'               => $sku,
+                        'type'              => 'simple',
+                        'description'       => $description,
+                        'short_description' => '',
+                        'price'             => $regular_price,
+                        'regular_price'     => $regular_price,
+                        'stock_status'      => 'instock',
+                        'attributes'        => [],
                     ];
 
                     // Update product
                     $client->put( 'products/' . $_product_id, $product_data );
 
                     // Update product stock
-                    be_handle_product_stock( $_product_id, $quantity );
+                    // be_handle_product_stock( $_product_id, $quantity );
 
                     // Update product prices
-                    update_post_meta( $_product_id, '_regular_price', $regular_price );
-                    update_post_meta( $_product_id, '_price', $sale_price );
+                    // update_post_meta( $_product_id, '_regular_price', $regular_price );
+                    // update_post_meta( $_product_id, '_price', $sale_price );
 
                     // Update the status completed
                     $wpdb->update(
@@ -138,11 +152,15 @@ function products_import_woocommerce() {
                 } else {
                     // Create a new simple product if it does not exist
                     $_product_data = [
-                        'name'        => $title,
-                        'sku'         => $sku,
-                        'type'        => 'simple',
-                        'description' => $description,
-                        'attributes'  => [],
+                        'name'              => $title,
+                        'sku'               => $sku,
+                        'type'              => 'simple',
+                        'description'       => $description,
+                        'short_description' => '',
+                        'price'             => $regular_price,
+                        'regular_price'     => $regular_price,
+                        'stock_status'      => 'instock',
+                        'attributes'        => [],
                     ];
 
                     // Create the product
@@ -154,8 +172,8 @@ function products_import_woocommerce() {
                     update_post_meta( $product_id, '_visibility', 'visible' );
 
                     // Update product prices
-                    update_post_meta( $product_id, '_regular_price', $regular_price );
-                    update_post_meta( $product_id, '_price', $sale_price );
+                    // update_post_meta( $product_id, '_regular_price', $regular_price );
+                    // update_post_meta( $product_id, '_price', $sale_price );
 
                     // Update product category
                     wp_set_object_terms( $product_id, $category, 'product_cat' );
@@ -163,8 +181,16 @@ function products_import_woocommerce() {
                     // Update product tags
                     wp_set_object_terms( $product_id, $tags, 'product_tag' );
 
+                    // update product meta data
+                    update_post_meta( $product_id, '_jap_product_type', $product_type );
+                    update_post_meta( $product_id, '_jap_min', $min );
+                    update_post_meta( $product_id, '_jap_max', $max );
+                    update_post_meta( $product_id, '_jap_dripfeed', $dripfeed );
+                    update_post_meta( $product_id, '_jap_refill', $refill );
+                    update_post_meta( $product_id, '_jap_cancel', $cancel );
+
                     // Update product stock
-                    be_handle_product_stock( $product_id, $quantity );
+                    // be_handle_product_stock( $product_id, $quantity );
 
                     // Set product image gallery and thumbnail
                     if ( $images ) {
