@@ -20,26 +20,26 @@ $jap_api_key      = get_option( 'jap_api_key' ) ?? '';
                 <div class="row mb-3">
                     <!-- Label for Client ID -->
                     <label class="col-sm-4 col-form-label text-start" for="client-id">
-                        <?php esc_html_e( 'Client ID', 'just-another-panel' ); ?>
+                        <?php esc_html_e( 'Consumer Key', 'just-another-panel' ); ?>
                     </label>
-                    <!-- Input for Client ID -->
+                    <!-- Input for Consumer Key -->
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="client-id" id="client-id"
                             value="<?php echo esc_attr( $client_id ); ?>"
-                            placeholder="<?php esc_attr_e( 'Client ID', 'just-another-panel' ); ?>" required>
+                            placeholder="<?php esc_attr_e( 'Consumer Key', 'just-another-panel' ); ?>" required>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <!-- Label for Client Secret -->
                     <label class="col-sm-4 col-form-label text-start" for="client-secret">
-                        <?php esc_html_e( 'Client Secret', 'just-another-panel' ); ?>
+                        <?php esc_html_e( 'Consumer Secret', 'just-another-panel' ); ?>
                     </label>
-                    <!-- Input for Client Secret -->
+                    <!-- Input for Consumer Secret -->
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="client-secret" id="client-secret"
                             value="<?php echo esc_attr( $client_secret ); ?>"
-                            placeholder="<?php esc_attr_e( 'Client Secret', 'just-another-panel' ); ?>" required>
+                            placeholder="<?php esc_attr_e( 'Consumer Secret', 'just-another-panel' ); ?>" required>
                     </div>
                 </div>
 
@@ -51,13 +51,13 @@ $jap_api_key      = get_option( 'jap_api_key' ) ?? '';
                 <div class="row mb-3">
                     <!-- Label for Client Secret -->
                     <label class="col-sm-4 col-form-label text-start" for="jap_api_base_url">
-                        <?php esc_html_e( 'API Base Url', 'just-another-panel' ); ?>
+                        <?php esc_html_e( 'API Url', 'just-another-panel' ); ?>
                     </label>
                     <!-- Input for Client Secret -->
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="jap_api_base_url" id="jap_api_base_url"
                             value="<?php echo esc_attr( $jap_api_base_url ); ?>"
-                            placeholder="<?php esc_attr_e( 'API Base Url', 'just-another-panel' ); ?>" required>
+                            placeholder="<?php esc_attr_e( 'API Url', 'just-another-panel' ); ?>" required>
                     </div>
                 </div>
 

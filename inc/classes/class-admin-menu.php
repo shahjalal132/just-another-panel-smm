@@ -86,7 +86,7 @@ class Admin_Menu {
                     <li class="nav-item"><a href="#api"
                             class="nav-link be-nav-links"><?php esc_html_e( 'API', 'just-another-panel' ); ?></a></li>
                     <li class="nav-item"><a href="#tables"
-                            class="nav-link be-nav-links"><?php esc_html_e( 'Tables', 'just-another-panel' ); ?></a></li>
+                            class="nav-link be-nav-links"><?php esc_html_e( 'Table Prefix', 'just-another-panel' ); ?></a></li>
                     <li class="nav-item"><a href="#endpoints"
                             class="nav-link be-nav-links"><?php esc_html_e( 'Endpoints', 'just-another-panel' ); ?></a></li>
                 </ul>

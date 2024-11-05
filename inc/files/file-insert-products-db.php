@@ -1,5 +1,8 @@
 <?php
 
+$jap_api_base_url = get_option( 'jap_api_base_url' ) ?? '';
+$jap_api_key      = get_option( 'jap_api_key' ) ?? '';
+
 // TRUNCATE Table
 function truncate_table( $table_name ) {
     global $wpdb;
@@ -9,25 +12,26 @@ function truncate_table( $table_name ) {
 // fetch products from api
 function fetch_products_from_api() {
 
+    global $jap_api_base_url, $jap_api_key;
+
     $curl = curl_init();
-    curl_setopt_array( $curl, [
-        CURLOPT_URL            => '',
+    curl_setopt_array( $curl, array(
+        CURLOPT_URL            => $jap_api_base_url,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING       => '',
         CURLOPT_MAXREDIRS      => 10,
         CURLOPT_TIMEOUT        => 0,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST  => 'GET',
-        CURLOPT_HTTPHEADER     => [
-            '',
-        ],
-    ] );
+        CURLOPT_CUSTOMREQUEST  => 'POST',
+        CURLOPT_POSTFIELDS     => array( 'key' => $jap_api_key, 'action' => 'services' ),
+    ) );
 
     $response = curl_exec( $curl );
 
     curl_close( $curl );
     return $response;
+
 }
 
 // insert products to database
@@ -46,28 +50,58 @@ function insert_products_db() {
         }
     }
 
+    // echo count($products);
+    // die();
+
     // Database insertion
     global $wpdb;
     $table_prefix   = get_option( 'be-table-prefix' ) ?? '';
     $products_table = $wpdb->prefix . $table_prefix . 'sync_products';
 
     // Truncate table with error handling
-    truncate_table( $products_table );
+    // truncate_table( $products_table );
 
     // Insert products and handle errors individually
     $errors = [];
     foreach ( $products as $product ) {
 
+        $product_number = $product['service'];
+
+        $product_data = [
+            'service'  => $product_number,
+            'name'     => $product['name'],
+            'type'     => $product['type'],
+            'rate'     => $product['rate'],
+            'min'      => $product['min'],
+            'max'      => $product['max'],
+            'dripfeed' => $product['dripfeed'],
+            'refill'   => $product['refill'],
+            'cancel'   => $product['cancel'],
+            'category' => $product['category'],
+        ];
+
         $product_data = json_encode( $product );
 
-        $inserted = $wpdb->insert(
+        $sql = $wpdb->prepare(
+            "INSERT INTO $products_table (product_number, product_data, status) VALUES (%s, %s, %s)
+            ON DUPLICATE KEY UPDATE product_data = %s, status = %s",
+            $product_number,
+            $product_data,
+            'pending',
+            $product_data,
+            'pending'
+        );
+
+        $inserted = $wpdb->query( $sql );
+
+        /* $inserted = $wpdb->insert(
             $products_table,
             [
-                'product_number' => '',
+                'product_number' => $product_number,
                 'product_data'   => $product_data,
                 'status'         => 'pending',
             ]
-        );
+        ); */
 
         if ( $inserted === false ) {
             $errors[] = 'Error inserting product: ' . $wpdb->last_error;
