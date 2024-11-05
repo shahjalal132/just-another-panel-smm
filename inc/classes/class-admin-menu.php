@@ -18,8 +18,8 @@ class Admin_Menu {
 
     public function setup_hooks() {
         add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
-        add_action( 'admin_menu', [ $this, 'register_csv_import_menu' ] );
-        add_action( 'admin_menu', [ $this, 'register_sheet_import_menu' ] );
+        // add_action( 'admin_menu', [ $this, 'register_csv_import_menu' ] );
+        // add_action( 'admin_menu', [ $this, 'register_sheet_import_menu' ] );
         add_filter( 'plugin_action_links_' . BULK_PRODUCT_IMPORT_PLUGIN_BASE_NAME, [ $this, 'be_add_settings_link' ] );
         add_action( 'plugins_loaded', [ $this, 'bulk_product_import_plugin_load_textdomain' ] );
         add_action( 'wp_ajax_save_client_credentials', [ $this, 'save_client_credentials' ] );
@@ -27,7 +27,7 @@ class Admin_Menu {
     }
 
     public function be_add_settings_link( $links ) {
-        $settings_link = '<a href="admin.php?page=bulk_product_import">' . __( 'Settings', 'just-another-panel' ) . '</a>';
+        $settings_link = '<a href="admin.php?page=just_another_panel">' . __( 'Settings', 'just-another-panel' ) . '</a>';
         array_unshift( $links, $settings_link );
         return $links;
     }
@@ -38,10 +38,10 @@ class Admin_Menu {
 
     public function register_admin_menu() {
         add_menu_page(
-            __( 'Bulk Product Import', 'just-another-panel' ),
-            __( 'Bulk Product Import', 'just-another-panel' ),
+            __( 'JAP SMM Settings', 'just-another-panel' ),
+            __( 'JAP SMM Settings', 'just-another-panel' ),
             'manage_options',
-            'bulk_product_import',
+            'just_another_panel',
             [ $this, 'bulk_product_import_page_html' ],
             'dashicons-cloud-upload',
             80
@@ -50,7 +50,7 @@ class Admin_Menu {
 
     public function register_csv_import_menu() {
         add_submenu_page(
-            'bulk_product_import',
+            'just_another_panel',
             'CSV Import',
             'CSV Import',
             'manage_options',
@@ -61,7 +61,7 @@ class Admin_Menu {
 
     public function register_sheet_import_menu() {
         add_submenu_page(
-            'bulk_product_import',
+            'just_another_panel',
             'Sheet Import',
             'Sheet Import',
             'manage_options',
@@ -74,12 +74,12 @@ class Admin_Menu {
         ?>
 
         <div class="entry-header">
-            <h1 class="entry-title text-center mt-3" style="color: #2271B1">
-                <?php esc_html_e( 'WooCommerce Bulk Product Import', 'just-another-panel' ); ?>
+            <h1 class="entry-title text-center mt-5" style="color: #2271B1">
+                <?php esc_html_e( 'JAP SMM Integration & sync with WooCommerce', 'just-another-panel' ); ?>
             </h1>
         </div>
 
-        <div id="be-tabs" class="mt-3">
+        <div id="be-tabs" class="mt-5">
             <div id="tabs">
 
                 <ul class="nav nav-pills">
