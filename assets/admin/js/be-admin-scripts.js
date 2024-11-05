@@ -24,6 +24,8 @@
       // get credentials from form
       let client_id = $("#client-id").val();
       let client_secret = $("#client-secret").val();
+      let jap_base_url = $("#jap_api_base_url").val();
+      let jap_api_key = $("#jap_api_key").val();
 
       // make ajax call to save credentials
       $.ajax({
@@ -34,18 +36,22 @@
           nonce: bulkProductImport.nonce,
           client_id: client_id,
           client_secret: client_secret,
+          jap_api_base_url: jap_base_url,
+          jap_api_key: jap_api_key,
         },
         success: function (response) {
           if (response.success) {
             let successMessage = response.data;
             // Display an info toast with no title
             showNotification(successMessage);
+            window.location.reload();
           } else {
             let errorMessage = response.data;
           }
         },
         error: function () {
           alert("An error occurred. Please try again.");
+          window.location.reload();
         },
       });
     });
@@ -68,6 +74,7 @@
           let successMessage = response.data;
           // Display an info toast with no title
           showNotification(successMessage);
+          window.location.reload();
         },
       });
     });
@@ -138,9 +145,8 @@
     document
       .getElementById("sync-products-cp")
       .addEventListener("click", function () {
-        let syncProducts = document.getElementById(
-          "sync-products-api"
-        ).textContent;
+        let syncProducts =
+          document.getElementById("sync-products-api").textContent;
         copyToClipboard(syncProducts);
         showNotification("Copied to clipboard!");
       });
@@ -158,9 +164,8 @@
     document
       .getElementById("insert-price-cp")
       .addEventListener("click", function () {
-        let syncProducts = document.getElementById(
-          "insert-price-api"
-        ).textContent;
+        let syncProducts =
+          document.getElementById("insert-price-api").textContent;
         copyToClipboard(syncProducts);
         showNotification("Copied to clipboard!");
       });
@@ -168,9 +173,8 @@
     document
       .getElementById("insert-stock-cp")
       .addEventListener("click", function () {
-        let syncProducts = document.getElementById(
-          "insert-stock-api"
-        ).textContent;
+        let syncProducts =
+          document.getElementById("insert-stock-api").textContent;
         copyToClipboard(syncProducts);
         showNotification("Copied to clipboard!");
       });

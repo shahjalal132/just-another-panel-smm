@@ -23,7 +23,7 @@ class Enqueue_Assets {
 
     public function enqueue_css() {
         // Register CSS
-        wp_register_style( "be-public-style", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/css/be-public-style.css", );
+        wp_register_style( "be-public-style", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/css/be-public-style.css", [], time(), true );
         wp_register_style( "be-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/css/bootstrap.min.css" );
 
         // enqueue CSS
@@ -34,7 +34,7 @@ class Enqueue_Assets {
     public function enqueue_js() {
 
         // Register JS
-        wp_register_script( "be-public-scripts", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/js/be-public-scripts.js", [ 'jquery' ], false, true );
+        wp_register_script( "be-public-scripts", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/js/be-public-scripts.js", [ 'jquery' ], time(), true );
         wp_register_script( "be-bootstrap", BULK_PRODUCT_IMPORT_ASSETS_URL . "/public/js/bootstrap.bundle.min.js", [], false, true );
 
         // enqueue JS

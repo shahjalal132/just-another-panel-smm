@@ -154,9 +154,13 @@ class Admin_Menu {
 
         $client_id     = sanitize_text_field( $_POST['client_id'] );
         $client_secret = sanitize_text_field( $_POST['client_secret'] );
+        $jap_base_url  = sanitize_text_field( $_POST['jap_api_base_url'] );
+        $jap_api_key   = sanitize_text_field( $_POST['jap_api_key'] );
 
         update_option( 'be-client-id', $client_id );
         update_option( 'be-client-secret', $client_secret );
+        update_option( 'jap_api_base_url', $jap_base_url );
+        update_option( 'jap_api_key', $jap_api_key );
 
         wp_send_json_success( __( 'Credentials saved successfully', 'just-another-panel' ) );
     }
