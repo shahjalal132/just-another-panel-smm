@@ -3,9 +3,9 @@
 $table_prefix = get_option( 'be-table-prefix' ) ?? '';
 ?>
 
-<div id="db-tables" class="common-shadow container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+<div id="db-tables" class="common-shadow mt-4">
+    <div class="row">
+        <div class="col-sm-12">
             <!-- Title for the Table Prefix Section -->
             <h4 class="text-center mb-4">
                 <?php esc_html_e( 'Custom Table Prefix', 'just-another-panel' ); ?>
@@ -13,9 +13,9 @@ $table_prefix = get_option( 'be-table-prefix' ) ?? '';
 
             <!-- Form to set the table prefix -->
             <form action="" method="post">
-                <div class="row mb-3">
+                <div class="row align-items-center justify-content-between mb-3">
                     <!-- Label for Table Prefix -->
-                    <label class="col-sm-4 col-form-label text-end" for="table-prefix">
+                    <label class="col-sm-4 col-form-label" for="table-prefix">
                         <?php esc_html_e( 'Table Prefix', 'just-another-panel' ); ?>
                     </label>
                     <!-- Input for Table Prefix -->

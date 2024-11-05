@@ -6,8 +6,8 @@ $client_secret = get_option( 'be-client-secret' ) ?? '';
 
 <!-- API credentials form -->
 <div class="container-fluid api-credentials">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+    <div class="row">
+        <div class="col-sm-12">
             <!-- Title for the API credentials section -->
             <h4 class="text-center mb-4">
                 <?php esc_html_e( 'WooCommerce API Credentials', 'just-another-panel' ); ?>
@@ -17,11 +17,11 @@ $client_secret = get_option( 'be-client-secret' ) ?? '';
             <form id="client-credentials-form">
                 <div class="row mb-3">
                     <!-- Label for Client ID -->
-                    <label class="col-sm-3 col-form-label text-start" for="client-id">
+                    <label class="col-sm-4 col-form-label text-start" for="client-id">
                         <?php esc_html_e( 'Client ID', 'just-another-panel' ); ?>
                     </label>
                     <!-- Input for Client ID -->
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                         <input type="text" class="form-control" name="client-id" id="client-id"
                                value="<?php echo esc_attr( $client_id ); ?>"
                                placeholder="<?php esc_attr_e( 'Client ID', 'just-another-panel' ); ?>" required>
@@ -30,11 +30,11 @@ $client_secret = get_option( 'be-client-secret' ) ?? '';
 
                 <div class="row mb-3">
                     <!-- Label for Client Secret -->
-                    <label class="col-sm-3 col-form-label text-start" for="client-secret">
+                    <label class="col-sm-4 col-form-label text-start" for="client-secret">
                         <?php esc_html_e( 'Client Secret', 'just-another-panel' ); ?>
                     </label>
                     <!-- Input for Client Secret -->
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                         <input type="text" class="form-control" name="client-secret" id="client-secret"
                                value="<?php echo esc_attr( $client_secret ); ?>"
                                placeholder="<?php esc_attr_e( 'Client Secret', 'just-another-panel' ); ?>" required>
